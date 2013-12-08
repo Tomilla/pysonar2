@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.ListType;
 import org.yinwang.pysonar.types.ModuleType;
 import org.yinwang.pysonar.types.Type;
@@ -38,7 +38,7 @@ public class ImportFrom extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull Scope s) {
+    public Type resolve(@NotNull State s) {
         if (module == null) {
             return Analyzer.self.builtins.Cont;
         }
@@ -85,7 +85,7 @@ public class ImportFrom extends Node {
     }
 
 
-    private void importStar(@NotNull Scope s, @Nullable ModuleType mt) {
+    private void importStar(@NotNull State s, @Nullable ModuleType mt) {
         if (mt == null || mt.getFile() == null) {
             return;
         }

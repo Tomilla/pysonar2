@@ -3,7 +3,7 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -113,13 +113,13 @@ public abstract class Node implements java.io.Serializable {
 
 
     @NotNull
-    public static Type resolveExpr(@NotNull Node n, Scope s) {
+    public static Type resolveExpr(@NotNull Node n, State s) {
         return n.resolve(s);
     }
 
 
     @NotNull
-    protected abstract Type resolve(Scope s);
+    protected abstract Type resolve(State s);
 
 
     public boolean isCall() {
@@ -226,7 +226,7 @@ public abstract class Node implements java.io.Serializable {
      * {@code null}, returns a new {@link org.yinwang.pysonar.types.UnknownType}.
      */
     @NotNull
-    protected Type resolveListAsUnion(@Nullable List<? extends Node> nodes, Scope s) {
+    protected Type resolveListAsUnion(@Nullable List<? extends Node> nodes, State s) {
         if (nodes == null || nodes.isEmpty()) {
             return Analyzer.self.builtins.unknown;
         }
@@ -244,7 +244,7 @@ public abstract class Node implements java.io.Serializable {
      * Resolves each element of a node list in the passed scope.
      * Node list may be empty or {@code null}.
      */
-    static protected void resolveList(@Nullable List<? extends Node> nodes, Scope s) {
+    static protected void resolveList(@Nullable List<? extends Node> nodes, State s) {
         if (nodes != null) {
             for (Node n : nodes) {
                 resolveExpr(n, s);
@@ -254,7 +254,7 @@ public abstract class Node implements java.io.Serializable {
 
 
     @Nullable
-    static protected List<Type> resolveAndConstructList(@Nullable List<? extends Node> nodes, Scope s) {
+    static protected List<Type> resolveAndConstructList(@Nullable List<? extends Node> nodes, State s) {
         if (nodes == null) {
             return null;
         } else {

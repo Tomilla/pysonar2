@@ -1,7 +1,7 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.DictType;
 import org.yinwang.pysonar.types.Type;
 
@@ -25,7 +25,7 @@ public class Dict extends Node {
 
     @NotNull
     @Override
-    public Type resolve(Scope s) {
+    public Type resolve(State s) {
         Type keyType = resolveListAsUnion(keys, s);
         Type valType = resolveListAsUnion(values, s);
         return new DictType(keyType, valType);

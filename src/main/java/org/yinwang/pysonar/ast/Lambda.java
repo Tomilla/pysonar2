@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binder;
 import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.FunType;
 import org.yinwang.pysonar.types.Type;
 
@@ -53,7 +53,7 @@ public class Lambda extends FunctionDef {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull Scope outer) {
+    public Type resolve(@NotNull State outer) {
         this.defaultTypes = resolveAndConstructList(defaults, outer);
         FunType cl = new FunType(this, outer.getForwarding());
         cl.getTable().setParent(outer);

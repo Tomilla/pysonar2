@@ -1,7 +1,7 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.TupleType;
 import org.yinwang.pysonar.types.Type;
 
@@ -17,7 +17,7 @@ public class Tuple extends Sequence {
 
     @NotNull
     @Override
-    public Type resolve(Scope s) {
+    public Type resolve(State s) {
         TupleType t = new TupleType();
         for (Node e : elts) {
             t.add(resolveExpr(e, s));

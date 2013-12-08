@@ -3,7 +3,7 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binder;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class Assign extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull Scope s) {
+    public Type resolve(@NotNull State s) {
         if (rvalue == null) {
             Analyzer.self.putProblem(this, "missing RHS of assignment");
         } else {

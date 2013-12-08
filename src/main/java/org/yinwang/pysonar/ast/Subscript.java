@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.DictType;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
@@ -26,7 +26,7 @@ public class Subscript extends Node {
 
     @NotNull
     @Override
-    public Type resolve(Scope s) {
+    public Type resolve(State s) {
         Type vt = resolveExpr(value, s);
         Type st = resolveExpr(slice, s);
 
@@ -43,7 +43,7 @@ public class Subscript extends Node {
 
 
     @NotNull
-    private Type getSubscript(@NotNull Type vt, @NotNull Type st, Scope s) {
+    private Type getSubscript(@NotNull Type vt, @NotNull Type st, State s) {
         if (vt.isUnknownType()) {
             return Analyzer.self.builtins.unknown;
         } else if (vt.isListType()) {
@@ -70,7 +70,7 @@ public class Subscript extends Node {
 
 
     @NotNull
-    private Type getListSubscript(@NotNull Type vt, @NotNull Type st, Scope s) {
+    private Type getListSubscript(@NotNull Type vt, @NotNull Type st, State s) {
         if (vt.isListType()) {
             if (st.isListType()) {
                 return vt;

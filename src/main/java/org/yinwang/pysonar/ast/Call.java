@@ -43,7 +43,7 @@ public class Call extends Node {
      */
     @NotNull
     @Override
-    public Type resolve(Scope s) {
+    public Type resolve(State s) {
 
 //// experiment with isinstance
 //        if (func.isName() && func.asName().id.equals("isinstance")) {
@@ -139,7 +139,7 @@ public class Call extends Node {
 
         bindMethodAttrs(func);
 
-        Scope funcTable = new Scope(func.getEnv(), Scope.ScopeType.FUNCTION);
+        State funcTable = new State(func.getEnv(), State.StateType.FUNCTION);
 
         if (func.getTable().getParent() != null) {
             funcTable.setPath(func.getTable().getParent().extendPath(func.func.name.id));
@@ -174,7 +174,7 @@ public class Call extends Node {
 
     @NotNull
     static private Type bindParams(@Nullable Node call,
-                                   @NotNull Scope funcTable,
+                                   @NotNull State funcTable,
                                    @NotNull List<Node> args,
                                    @Nullable Name fvarargs,
                                    @Nullable Name fkwargs,

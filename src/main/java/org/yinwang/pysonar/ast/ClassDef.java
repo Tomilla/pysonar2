@@ -49,7 +49,7 @@ public class ClassDef extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull Scope s) {
+    public Type resolve(@NotNull State s) {
         ClassType classType = new ClassType(getName().id, s);
         List<Type> baseTypes = new ArrayList<>();
         for (Node base : bases) {
@@ -84,7 +84,7 @@ public class ClassDef extends Node {
     }
 
 
-    private void addSpecialAttribute(@NotNull Scope s, String name, Type proptype) {
+    private void addSpecialAttribute(@NotNull State s, String name, Type proptype) {
         Binding b = new Binding(name, Builtins.newTutUrl("classes.html"), proptype, Binding.Kind.ATTRIBUTE);
         s.update(name, b);
         b.markSynthetic();

@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -26,10 +26,10 @@ public class If extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull Scope s) {
+    public Type resolve(@NotNull State s) {
         Type type1, type2;
-        Scope s1 = s.copy();
-        Scope s2 = s.copy();
+        State s1 = s.copy();
+        State s2 = s.copy();
 
         Type conditionType = resolveExpr(test, s);
         if (conditionType.isUndecidedBool()) {
@@ -58,7 +58,7 @@ public class If extends Node {
         } else if (conditionType.isFalse() && cont2) {
             s.overwrite(s2);
         } else if (cont1 && cont2) {
-            s.overwrite(Scope.merge(s1, s2));
+            s.overwrite(State.merge(s1, s2));
         } else if (cont1) {
             s.overwrite(s1);
         } else if (cont2) {

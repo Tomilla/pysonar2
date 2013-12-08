@@ -240,16 +240,16 @@ public class Outliner {
     /**
      * Create an outline for a symbol table.
      *
-     * @param scope the file scope
+     * @param state the file scope
      * @param path  the file for which we're building the outline
      * @return a list of entries constituting the outline
      */
     @NotNull
-    public List<Entry> generate(@NotNull Scope scope, @NotNull String path) {
+    public List<Entry> generate(@NotNull State state, @NotNull String path) {
         List<Entry> result = new ArrayList<>();
 
         Set<Binding> entries = new TreeSet<>();
-        for (Binding b : scope.values()) {
+        for (Binding b : state.values()) {
             if (!b.isSynthetic()
                     && !b.isBuiltin()
                     && path.equals(b.getFile()))

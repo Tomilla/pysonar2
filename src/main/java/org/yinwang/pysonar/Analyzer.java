@@ -21,9 +21,9 @@ public class Analyzer {
     public static Analyzer self;
     public boolean debug = false;
 
-    public Scope moduleTable = new Scope(null, Scope.ScopeType.GLOBAL);
+    public State moduleTable = new State(null, State.StateType.GLOBAL);
     public List<String> loadedFiles = new ArrayList<>();
-    public Scope globaltable = new Scope(null, Scope.ScopeType.GLOBAL);
+    public State globaltable = new State(null, State.StateType.GLOBAL);
     public List<Binding> allBindings = new ArrayList<>();
     private Map<Ref, List<Binding>> references = new LinkedHashMap<>();
     public Map<String, List<Diagnostic>> semanticErrors = new HashMap<>();
@@ -412,7 +412,7 @@ public class Analyzer {
 
 
     @Nullable
-    public ModuleType loadModule(@NotNull List<Name> name, @NotNull Scope scope) {
+    public ModuleType loadModule(@NotNull List<Name> name, @NotNull State state) {
         if (name.isEmpty()) {
             return null;
         }
@@ -421,7 +421,7 @@ public class Analyzer {
 
         ModuleType mt = getBuiltinModule(qname);
         if (mt != null) {
-            scope.insert(name.get(0).id,
+            state.insert(name.get(0).id,
                     new Url(Builtins.LIBRARY_URL + mt.getTable().getPath() + ".html"),
                     mt, Binding.Kind.SCOPE);
             return mt;
@@ -451,7 +451,7 @@ public class Analyzer {
                 if (prev != null) {
                     prev.getTable().insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                 } else {
-                    scope.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
+                    state.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                 }
 
                 prev = mod;
@@ -466,7 +466,7 @@ public class Analyzer {
                     if (prev != null) {
                         prev.getTable().insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                     } else {
-                        scope.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
+                        state.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                     }
                     prev = mod;
                 } else {

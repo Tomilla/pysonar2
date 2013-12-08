@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -25,7 +25,7 @@ public class While extends Node {
 
     @NotNull
     @Override
-    public Type resolve(Scope s) {
+    public Type resolve(State s) {
         resolveExpr(test, s);
         Type t = Analyzer.self.builtins.unknown;
 

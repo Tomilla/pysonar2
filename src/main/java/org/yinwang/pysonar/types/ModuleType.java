@@ -3,7 +3,7 @@ package org.yinwang.pysonar.types;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar._;
 
 
@@ -17,7 +17,7 @@ public class ModuleType extends Type {
     private String qname;
 
 
-    public ModuleType(@NotNull String name, @Nullable String file, @NotNull Scope parent) {
+    public ModuleType(@NotNull String name, @Nullable String file, @NotNull State parent) {
         this.name = name;
         this.file = file;  // null for builtin modules
         if (file != null) {
@@ -29,7 +29,7 @@ public class ModuleType extends Type {
         if (qname == null) {
             qname = name;
         }
-        setTable(new Scope(parent, Scope.ScopeType.MODULE));
+        setTable(new State(parent, State.StateType.MODULE));
         getTable().setPath(qname);
         getTable().setType(this);
 

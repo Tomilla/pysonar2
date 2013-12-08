@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binder;
 import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.Scope;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -37,7 +37,7 @@ public class For extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull Scope s) {
+    public Type resolve(@NotNull State s) {
         Binder.bindIter(s, target, iter, Binding.Kind.SCOPE);
 
         Type ret;
