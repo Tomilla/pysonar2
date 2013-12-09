@@ -2,9 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.ListType;
-import org.yinwang.pysonar.types.Type;
 
 
 public class Yield extends Node {
@@ -21,9 +20,9 @@ public class Yield extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
         if (value != null) {
-            return new ListType(resolveExpr(value, s));
+            return new ListType(transformExpr(value, s));
         } else {
             return Analyzer.self.builtins.None;
         }

@@ -25,8 +25,8 @@ public class Binder {
             ((Attribute) target).setAttr(s, rvalue);
         } else if (target instanceof Subscript) {
             Subscript sub = (Subscript) target;
-            Type valueType = Node.resolveExpr(sub.value, s);
-            Node.resolveExpr(sub.slice, s);
+            Type valueType = Node.transformExpr(sub.value, s);
+            Node.transformExpr(sub.slice, s);
             if (valueType instanceof ListType) {
                 ListType t = (ListType) valueType;
                 t.setElementType(UnionType.union(t.getElementType(), rvalue));
@@ -92,7 +92,7 @@ public class Binder {
 
     // iterator
     public static void bindIter(@NotNull State s, Node target, @NotNull Node iter, Binding.Kind kind) {
-        Type iterType = Node.resolveExpr(iter, s);
+        Type iterType = Node.transformExpr(iter, s);
 
         if (iterType.isListType()) {
             bind(s, target, iterType.asListType().getElementType(), kind);

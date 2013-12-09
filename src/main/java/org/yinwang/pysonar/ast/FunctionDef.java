@@ -2,10 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Binder;
-import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.*;
 import org.yinwang.pysonar.types.FunType;
 import org.yinwang.pysonar.types.Type;
 
@@ -149,10 +146,11 @@ public class FunctionDef extends Node {
      * "im_class". Its parent should be the table of the enclosing scope, and
      * its path should be derived from that scope too for locating the names
      * "lexically".
+     * @param outer
      */
     @NotNull
     @Override
-    public Type resolve(@NotNull State outer) {
+    public SuperState transform(@NotNull SuperState outer) {
         resolveList(decoratorList, outer);   //XXX: not handling functional transformations yet
         FunType fun = new FunType(this, outer.getForwarding());
         fun.getTable().setParent(outer);

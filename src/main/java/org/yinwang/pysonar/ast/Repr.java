@@ -2,8 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.SuperState;
 
 
 public class Repr extends Node {
@@ -20,9 +19,9 @@ public class Repr extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
         if (value != null) {
-            resolveExpr(value, s);
+            transformExpr(value, s);
         }
         return Analyzer.self.builtins.BaseStr;
     }

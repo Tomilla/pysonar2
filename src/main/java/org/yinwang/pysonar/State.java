@@ -22,7 +22,7 @@ public class State {
 
 
     @Nullable
-    private Map<String, List<Binding>> table;  // stays null for most scopes (mem opt)
+    private Map<String, Binding> table;  // stays null for most scopes (mem opt)
     @Nullable
     public State parent;      // all are non-null except global table
     @Nullable
@@ -83,34 +83,34 @@ public class State {
     }
 
 
-    public void merge(State other) {
-        for (Map.Entry<String, List<Binding>> e1 : getInternalTable().entrySet()) {
-            List<Binding> b1 = e1.getValue();
-            List<Binding> b2 = other.getInternalTable().get(e1.getKey());
-
-            // both branch have the same name, need merge
-            if (b2 != null && b1 != b2) {
-                b1.addAll(b2);
-            }
-        }
-
-        for (Map.Entry<String, List<Binding>> e2 : other.getInternalTable().entrySet()) {
-            List<Binding> b1 = getInternalTable().get(e2.getKey());
-            List<Binding> b2 = e2.getValue();
-
-            // both branch have the same name, need merge
-            if (b1 == null && b1 != b2) {
-                this.update(e2.getKey(), b2);
-            }
-        }
-    }
-
-
-    public static State merge(State state1, State state2) {
-        State ret = state1.copy();
-        ret.merge(state2);
-        return ret;
-    }
+//    public void merge(State other) {
+//        for (Map.Entry<String, List<Binding>> e1 : getInternalTable().entrySet()) {
+//            List<Binding> b1 = e1.getValue();
+//            List<Binding> b2 = other.getInternalTable().get(e1.getKey());
+//
+//            // both branch have the same name, need merge
+//            if (b2 != null && b1 != b2) {
+//                b1.addAll(b2);
+//            }
+//        }
+//
+//        for (Map.Entry<String, List<Binding>> e2 : other.getInternalTable().entrySet()) {
+//            List<Binding> b1 = getInternalTable().get(e2.getKey());
+//            List<Binding> b2 = e2.getValue();
+//
+//            // both branch have the same name, need merge
+//            if (b1 == null && b1 != b2) {
+//                this.update(e2.getKey(), b2);
+//            }
+//        }
+//    }
+//
+//
+//    public static State merge(State state1, State state2) {
+//        State ret = state1.copy();
+//        ret.merge(state2);
+//        return ret;
+//    }
 
 
     public void setParent(@Nullable State parent) {
@@ -189,20 +189,8 @@ public class State {
     }
 
 
-    // directly insert a given binding
-    @NotNull
-    public List<Binding> update(String id, @NotNull List<Binding> bs) {
-        getInternalTable().put(id, bs);
-        return bs;
-    }
-
-
-    @NotNull
-    public List<Binding> update(String id, @NotNull Binding b) {
-        List<Binding> bs = new ArrayList<>();
-        bs.add(b);
-        getInternalTable().put(id, bs);
-        return bs;
+    public void update(String id, @NotNull Binding b) {
+        getInternalTable().put(id, b);
     }
 
 
@@ -231,17 +219,12 @@ public class State {
      * Look up a name in the current symbol table only. Don't recurse on the
      * parent table.
      */
-    @NotNull
-    public List<Binding> lookupLocal(String name) {
+    @Nullable
+    public Binding lookupLocal(String name) {
         if (table == null) {
-            return Collections.emptyList();
+            return null;
         } else {
-            List<Binding> bs = table.get(name);
-            if (bs == null) {
-                return Collections.emptyList();
-            } else {
-                return bs;
-            }
+            return table.get(name);
         }
     }
 
@@ -250,36 +233,24 @@ public class State {
      * Look up a name (String) in the current symbol table.  If not found,
      * recurse on the parent table.
      */
-    @NotNull
-    public List<Binding> lookup(String name) {
-        List<Binding> b = getModuleBindingIfGlobal(name);
-        if (b != null) {
-            return b;
-        } else {
-            List<Binding> ent = lookupLocal(name);
-            if (!ent.isEmpty()) {
-                return ent;
-            } else if (getParent() != null) {
-                return getParent().lookup(name);
-            } else {
-                return Collections.emptyList();
+    @Nullable
+    public Binding lookup(String name) {
+        if (isGlobalName(name)) {
+            State module = getGlobalTable();
+            if (module != this) {
+                return module.lookupLocal(name);
             }
         }
-    }
 
-
-    /**
-     * Look up a name in the module if it is declared as global, otherwise look
-     * it up locally.
-     */
-    @NotNull
-    public List<Binding> lookupScope(String name) {
-        List<Binding> b = getModuleBindingIfGlobal(name);
-        if (b != null) {
-            return b;
+        Binding ent = lookupLocal(name);
+        if (ent != null) {
+            return ent;
+        } else if (getParent() != null) {
+            return getParent().lookup(name);
         } else {
-            return lookupLocal(name);
+            return null;
         }
+
     }
 
 
@@ -294,28 +265,28 @@ public class State {
     private static Set<State> looked = new HashSet<>();    // circularity prevention
 
 
-    @NotNull
-    public List<Binding> lookupAttr(String attr) {
+    @Nullable
+    public Binding lookupAttr(String attr) {
         if (looked.contains(this)) {
-            return Collections.emptyList();
+            return null;
         } else {
-            List<Binding> b = lookupLocal(attr);
-            if (!b.isEmpty()) {
+            Binding b = lookupLocal(attr);
+            if (b != null) {
                 return b;
             } else {
                 if (supers != null && !supers.isEmpty()) {
                     looked.add(this);
                     for (State p : supers) {
                         b = p.lookupAttr(attr);
-                        if (!b.isEmpty()) {
+                        if (b != null) {
                             looked.remove(this);
                             return b;
                         }
                     }
                     looked.remove(this);
-                    return Collections.emptyList();
+                    return null;
                 } else {
-                    return Collections.emptyList();
+                    return null;
                 }
             }
         }
@@ -327,11 +298,11 @@ public class State {
      */
     @Nullable
     public Type lookupType(String name) {
-        List<Binding> bs = lookup(name);
-        if (bs == null) {
+        Binding b = lookup(name);
+        if (b == null) {
             return null;
         } else {
-            return makeUnion(bs);
+            return b.getType();
         }
     }
 
@@ -341,11 +312,11 @@ public class State {
      */
     @Nullable
     public Type lookupAttrType(String attr) {
-        List<Binding> bs = lookupAttr(attr);
-        if (bs == null) {
+        Binding b = lookupAttr(attr);
+        if (b == null) {
             return null;
         } else {
-            return makeUnion(bs);
+            return b.getType();
         }
     }
 
@@ -389,21 +360,6 @@ public class State {
     }
 
 
-    /**
-     * If {@code name} is declared as a global, return the module binding.
-     */
-    @Nullable
-    private List<Binding> getModuleBindingIfGlobal(String name) {
-        if (isGlobalName(name)) {
-            State module = getGlobalTable();
-            if (module != this) {
-                return module.lookupLocal(name);
-            }
-        }
-        return null;
-    }
-
-
     public void putAll(@NotNull State other) {
         getInternalTable().putAll(other.getInternalTable());
     }
@@ -422,22 +378,20 @@ public class State {
     @NotNull
     public Collection<Binding> values() {
         if (table != null) {
-            List<Binding> ret = new ArrayList<>();
-            for (List<Binding> bs : table.values()) {
-                ret.addAll(bs);
-            }
-            return ret;
+            return table.values();
+        } else {
+            return Collections.emptySet();
         }
-        return Collections.emptySet();
     }
 
 
     @NotNull
-    public Set<Entry<String, List<Binding>>> entrySet() {
+    public Set<Entry<String, Binding>> entrySet() {
         if (table != null) {
             return table.entrySet();
+        } else {
+            return Collections.emptySet();
         }
-        return Collections.emptySet();
     }
 
 
@@ -457,7 +411,7 @@ public class State {
 
 
     @NotNull
-    private Map<String, List<Binding>> getInternalTable() {
+    private Map<String, Binding> getInternalTable() {
         if (this.table == null) {
             this.table = new HashMap<>();
         }

@@ -315,7 +315,7 @@ public class Analyzer {
                 return null;
             } else {
                 finer("resolving: " + file);
-                ModuleType mod = (ModuleType) Node.resolveExpr(ast, moduleTable);
+                ModuleType mod = (ModuleType) Node.transformExpr(ast, moduleTable);
                 finer("[success]");
                 loadedFiles.add(file);
                 return mod;

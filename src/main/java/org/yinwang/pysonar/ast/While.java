@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -25,16 +25,16 @@ public class While extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
-        resolveExpr(test, s);
+    public SuperState transform(SuperState s) {
+        transformExpr(test, s);
         Type t = Analyzer.self.builtins.unknown;
 
         if (body != null) {
-            t = resolveExpr(body, s);
+            t = transformExpr(body, s);
         }
 
         if (orelse != null) {
-            t = UnionType.union(t, resolveExpr(orelse, s));
+            t = UnionType.union(t, transformExpr(orelse, s));
         }
 
         return t;

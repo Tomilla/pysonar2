@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.ListType;
 import org.yinwang.pysonar.types.ModuleType;
 import org.yinwang.pysonar.types.Type;
@@ -38,7 +39,7 @@ public class ImportFrom extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         if (module == null) {
             return Analyzer.self.builtins.Cont;
         }

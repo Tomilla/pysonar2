@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class Name extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         List<Binding> b = s.lookup(id);
         if (b != null) {
             Analyzer.self.putRef(this, b);

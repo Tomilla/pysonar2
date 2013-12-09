@@ -2,8 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.SuperState;
 
 
 public class Raise extends Node {
@@ -24,15 +23,15 @@ public class Raise extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
         if (exceptionType != null) {
-            resolveExpr(exceptionType, s);
+            transformExpr(exceptionType, s);
         }
         if (inst != null) {
-            resolveExpr(inst, s);
+            transformExpr(inst, s);
         }
         if (traceback != null) {
-            resolveExpr(traceback, s);
+            transformExpr(traceback, s);
         }
         return Analyzer.self.builtins.Cont;
     }

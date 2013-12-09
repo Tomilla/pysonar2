@@ -1,8 +1,7 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.SuperState;
 
 
 /**
@@ -25,8 +24,8 @@ public class Keyword extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
-        return resolveExpr(value, s);
+    public SuperState transform(SuperState s) {
+        return transformExpr(value, s);
     }
 
 

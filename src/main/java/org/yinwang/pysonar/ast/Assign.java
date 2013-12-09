@@ -3,7 +3,7 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binder;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
@@ -32,11 +32,11 @@ public class Assign extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         if (rvalue == null) {
             Analyzer.self.putProblem(this, "missing RHS of assignment");
         } else {
-            Type valueType = resolveExpr(rvalue, s);
+            Type valueType = transformExpr(rvalue, s);
             for (Node t : targets) {
                 Binder.bind(s, t, valueType);
             }

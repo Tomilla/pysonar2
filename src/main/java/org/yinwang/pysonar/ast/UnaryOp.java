@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 
 
@@ -22,8 +22,8 @@ public class UnaryOp extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
-        Type valueType = resolveExpr(operand, s);
+    public SuperState transform(SuperState s) {
+        Type valueType = transformExpr(operand, s);
 
         if (op == Op.Add) {
             if (valueType.isNumType()) {

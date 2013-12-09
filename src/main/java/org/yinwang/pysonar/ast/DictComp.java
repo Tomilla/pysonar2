@@ -1,7 +1,7 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.DictType;
 import org.yinwang.pysonar.types.Type;
 
@@ -29,13 +29,14 @@ public class DictComp extends Node {
      * Python's list comprehension will bind the variables used in generators.
      * This will erase the original values of the variables even after the
      * comprehension.
+     * @param s
      */
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
         resolveList(generators, s);
-        Type keyType = resolveExpr(key, s);
-        Type valueType = resolveExpr(value, s);
+        Type keyType = transformExpr(key, s);
+        Type valueType = transformExpr(value, s);
         return new DictType(keyType, valueType);
     }
 

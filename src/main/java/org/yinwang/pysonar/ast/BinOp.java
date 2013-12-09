@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.BoolType;
 import org.yinwang.pysonar.types.NumType;
 import org.yinwang.pysonar.types.Type;
@@ -30,17 +31,17 @@ public class BinOp extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
 
-        Type ltype = resolveExpr(left, s);
+        Type ltype = transformExpr(left, s);
         Type rtype;
 
         // boolean operations
         if (op == Op.And) {
             if (ltype.isUndecidedBool()) {
-                rtype = resolveExpr(right, ltype.asBool().getS1());
+                rtype = transformExpr(right, ltype.asBool().getS1());
             } else {
-                rtype = resolveExpr(right, s);
+                rtype = transformExpr(right, s);
             }
 
             if (ltype.isTrue() && rtype.isTrue()) {
@@ -57,9 +58,9 @@ public class BinOp extends Node {
 
         if (op == Op.Or) {
             if (ltype.isUndecidedBool()) {
-                rtype = resolveExpr(right, ltype.asBool().getS2());
+                rtype = transformExpr(right, ltype.asBool().getS2());
             } else {
-                rtype = resolveExpr(right, s);
+                rtype = transformExpr(right, s);
             }
 
             if (ltype.isTrue() || rtype.isTrue()) {
@@ -74,7 +75,7 @@ public class BinOp extends Node {
             }
         }
 
-        rtype = resolveExpr(right, s);
+        rtype = transformExpr(right, s);
 
         if (ltype.isUnknownType() || rtype.isUnknownType()) {
             return Analyzer.self.builtins.unknown;

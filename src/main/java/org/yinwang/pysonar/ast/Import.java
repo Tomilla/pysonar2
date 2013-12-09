@@ -3,9 +3,8 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.ModuleType;
-import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Import extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         for (Alias a : names) {
             ModuleType mod = Analyzer.self.loadModule(a.name, s);
             if (mod == null) {

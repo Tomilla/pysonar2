@@ -40,10 +40,11 @@ public class Call extends Node {
      * Most of the work here is done by the static method invoke, which is also
      * used by Analyzer.applyUncalled. By using a static method we avoid building
      * a NCall node for those dummy calls.
+     * @param s
      */
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
 
 //// experiment with isinstance
 //        if (func.isName() && func.asName().id.equals("isinstance")) {
@@ -55,16 +56,16 @@ public class Call extends Node {
 //            }
 //        }
 
-        Type opType = resolveExpr(func, s);
+        Type opType = transformExpr(func, s);
         List<Type> aTypes = resolveAndConstructList(args, s);
         Map<String, Type> kwTypes = new HashMap<>();
 
         for (Keyword kw : keywords) {
-            kwTypes.put(kw.getArg(), resolveExpr(kw.getValue(), s));
+            kwTypes.put(kw.getArg(), transformExpr(kw.getValue(), s));
         }
 
-        Type kwargsType = kwargs == null ? null : resolveExpr(kwargs, s);
-        Type starargsType = starargs == null ? null : resolveExpr(starargs, s);
+        Type kwargsType = kwargs == null ? null : transformExpr(kwargs, s);
+        Type starargsType = starargs == null ? null : transformExpr(starargs, s);
 
         if (opType.isUnionType()) {
             Set<Type> types = opType.asUnionType().getTypes();
@@ -156,7 +157,7 @@ public class Call extends Node {
             func.setSelfType(null);
             return cachedTo;
         } else {
-            Type toType = resolveExpr(func.func.body, funcTable);
+            Type toType = transformExpr(func.func.body, funcTable);
             if (missingReturn(toType)) {
                 Analyzer.self.putProblem(func.func.name, "Function not always return a value");
 

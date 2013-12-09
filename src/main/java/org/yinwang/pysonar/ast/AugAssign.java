@@ -2,8 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.SuperState;
 
 
 public class AugAssign extends Node {
@@ -24,9 +23,9 @@ public class AugAssign extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
-        resolveExpr(target, s);
-        resolveExpr(value, s);
+    public SuperState transform(SuperState s) {
+        transformExpr(target, s);
+        transformExpr(value, s);
         return Analyzer.self.builtins.Cont;
     }
 

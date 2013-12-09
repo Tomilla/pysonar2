@@ -1,10 +1,7 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.Binder;
-import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.*;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -37,17 +34,17 @@ public class For extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         Binder.bindIter(s, target, iter, Binding.Kind.SCOPE);
 
         Type ret;
         if (body == null) {
             ret = Analyzer.self.builtins.unknown;
         } else {
-            ret = resolveExpr(body, s);
+            ret = transformExpr(body, s);
         }
         if (orelse != null) {
-            ret = UnionType.union(ret, resolveExpr(orelse, s));
+            ret = UnionType.union(ret, transformExpr(orelse, s));
         }
         return ret;
     }

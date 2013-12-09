@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -30,20 +30,20 @@ public class TryExcept extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
+    public SuperState transform(SuperState s) {
         Type tp1 = Analyzer.self.builtins.unknown;
         Type tp2 = Analyzer.self.builtins.unknown;
         Type tph = Analyzer.self.builtins.unknown;
 
         for (ExceptHandler h : handlers) {
-            tph = UnionType.union(tph, resolveExpr(h, s));
+            tph = UnionType.union(tph, transformExpr(h, s));
         }
 
         if (body != null) {
-            tp1 = resolveExpr(body, s);
+            tp1 = transformExpr(body, s);
         }
         if (orelse != null) {
-            tp2 = resolveExpr(orelse, s);
+            tp2 = transformExpr(orelse, s);
         }
 
         return UnionType.union(tp1, UnionType.union(tp2, tph));

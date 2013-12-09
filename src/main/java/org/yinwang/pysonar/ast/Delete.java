@@ -2,8 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.SuperState;
 
 import java.util.List;
 
@@ -22,9 +21,9 @@ public class Delete extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         for (Node n : targets) {
-            resolveExpr(n, s);
+            transformExpr(n, s);
             if (n instanceof Name) {
                 s.remove(n.asName().id);
             }

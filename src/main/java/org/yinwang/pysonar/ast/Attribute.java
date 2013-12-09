@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -43,7 +44,7 @@ public class Attribute extends Node {
 
 
     public void setAttr(State s, @NotNull Type v) {
-        Type targetType = resolveExpr(target, s);
+        Type targetType = transformExpr(target, s);
         if (targetType.isUnionType()) {
             Set<Type> types = targetType.asUnionType().getTypes();
             for (Type tp : types) {
@@ -72,8 +73,8 @@ public class Attribute extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
-        Type targetType = resolveExpr(target, s);
+    public SuperState transform(SuperState s) {
+        Type targetType = transformExpr(target, s);
         if (targetType.isUnionType()) {
             Set<Type> types = targetType.asUnionType().getTypes();
             Type retType = Analyzer.self.builtins.unknown;

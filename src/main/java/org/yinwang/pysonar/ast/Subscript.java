@@ -3,6 +3,7 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.DictType;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
@@ -26,9 +27,9 @@ public class Subscript extends Node {
 
     @NotNull
     @Override
-    public Type resolve(State s) {
-        Type vt = resolveExpr(value, s);
-        Type st = resolveExpr(slice, s);
+    public SuperState transform(SuperState s) {
+        Type vt = transformExpr(value, s);
+        Type st = transformExpr(slice, s);
 
         if (vt.isUnionType()) {
             Type retType = Analyzer.self.builtins.unknown;

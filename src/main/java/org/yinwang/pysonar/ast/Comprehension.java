@@ -3,8 +3,7 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Binder;
 import org.yinwang.pysonar.Binding;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.SuperState;
 
 import java.util.List;
 
@@ -34,10 +33,10 @@ public class Comprehension extends Node {
 
     @NotNull
     @Override
-    public Type resolve(@NotNull State s) {
+    public SuperState transform(@NotNull SuperState s) {
         Binder.bindIter(s, target, iter, Binding.Kind.SCOPE);
         resolveList(ifs, s);
-        return resolveExpr(target, s);
+        return transformExpr(target, s);
     }
 
 
