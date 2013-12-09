@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class Print extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         if (dest != null) {
-            transformExpr(dest, s);
+            resolveExpr(dest, s);
         }
         if (values != null) {
             resolveList(values, s);

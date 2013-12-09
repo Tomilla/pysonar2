@@ -83,34 +83,18 @@ public class State {
     }
 
 
-//    public void merge(State other) {
-//        for (Map.Entry<String, List<Binding>> e1 : getInternalTable().entrySet()) {
-//            List<Binding> b1 = e1.getValue();
-//            List<Binding> b2 = other.getInternalTable().get(e1.getKey());
-//
-//            // both branch have the same name, need merge
-//            if (b2 != null && b1 != b2) {
-//                b1.addAll(b2);
-//            }
-//        }
-//
-//        for (Map.Entry<String, List<Binding>> e2 : other.getInternalTable().entrySet()) {
-//            List<Binding> b1 = getInternalTable().get(e2.getKey());
-//            List<Binding> b2 = e2.getValue();
-//
-//            // both branch have the same name, need merge
-//            if (b1 == null && b1 != b2) {
-//                this.update(e2.getKey(), b2);
-//            }
-//        }
-//    }
-//
-//
-//    public static State merge(State state1, State state2) {
-//        State ret = state1.copy();
-//        ret.merge(state2);
-//        return ret;
-//    }
+    public void merge(State other) {
+        for (Map.Entry<String, Binding> e2 : other.getInternalTable().entrySet()) {
+            this.update(e2.getKey(), e2.getValue());
+        }
+    }
+
+
+    public static State merge(State state1, State state2) {
+        State ret = state1.copy();
+        ret.merge(state2);
+        return ret;
+    }
 
 
     public void setParent(@Nullable State parent) {

@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.types.Type;
 
 
 public class Assert extends Node {
@@ -21,12 +22,12 @@ public class Assert extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         if (test != null) {
-            transformExpr(test, s);
+            resolveExpr(test, s);
         }
         if (msg != null) {
-            transformExpr(msg, s);
+            resolveExpr(msg, s);
         }
         return Analyzer.self.builtins.Cont;
     }

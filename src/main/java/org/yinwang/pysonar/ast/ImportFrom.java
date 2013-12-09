@@ -5,7 +5,6 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.ListType;
 import org.yinwang.pysonar.types.ModuleType;
 import org.yinwang.pysonar.types.Type;
@@ -39,7 +38,7 @@ public class ImportFrom extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(@NotNull SuperState s) {
+    public Type resolve(@NotNull State s) {
         if (module == null) {
             return Analyzer.self.builtins.Cont;
         }
@@ -53,14 +52,14 @@ public class ImportFrom extends Node {
         } else {
             for (Alias a : names) {
                 Name first = a.name.get(0);
-                List<Binding> bs = mod.getTable().lookup(first.id);
-                if (bs != null) {
+                Binding b = mod.getTable().lookup(first.id);
+                if (b != null) {
                     if (a.asname != null) {
-                        s.update(a.asname.id, bs);
-                        Analyzer.self.putRef(a.asname, bs);
+                        s.update(a.asname.id, b);
+                        Analyzer.self.putRef(a.asname, b);
                     } else {
-                        s.update(first.id, bs);
-                        Analyzer.self.putRef(first, bs);
+                        s.update(first.id, b);
+                        Analyzer.self.putRef(first, b);
                     }
                 } else {
                     List<Name> ext = new ArrayList<>(module);
@@ -111,7 +110,7 @@ public class ImportFrom extends Node {
 
         if (!names.isEmpty()) {
             for (String name : names) {
-                List<Binding> b = mt.getTable().lookupLocal(name);
+                Binding b = mt.getTable().lookupLocal(name);
                 if (b != null) {
                     s.update(name, b);
                 } else {
@@ -125,7 +124,7 @@ public class ImportFrom extends Node {
             }
         } else {
             // Fall back to importing all names not starting with "_".
-            for (Entry<String, List<Binding>> e : mt.getTable().entrySet()) {
+            for (Entry<String, Binding> e : mt.getTable().entrySet()) {
                 if (!e.getKey().startsWith("_")) {
                     s.update(e.getKey(), e.getValue());
                 }

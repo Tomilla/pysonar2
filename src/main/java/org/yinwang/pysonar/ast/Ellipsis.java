@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.types.Type;
 
 
 public class Ellipsis extends Node {
@@ -21,7 +22,7 @@ public class Ellipsis extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         return Analyzer.self.builtins.None;
     }
 

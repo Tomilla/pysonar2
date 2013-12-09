@@ -5,11 +5,9 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.yinwang.pysonar.Binding.Kind.ATTRIBUTE;
@@ -44,7 +42,7 @@ public class Attribute extends Node {
 
 
     public void setAttr(State s, @NotNull Type v) {
-        Type targetType = transformExpr(target, s);
+        Type targetType = resolveExpr(target, s);
         if (targetType.isUnionType()) {
             Set<Type> types = targetType.asUnionType().getTypes();
             for (Type tp : types) {
@@ -73,8 +71,8 @@ public class Attribute extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
-        Type targetType = transformExpr(target, s);
+    public Type resolve(State s) {
+        Type targetType = resolveExpr(target, s);
         if (targetType.isUnionType()) {
             Set<Type> types = targetType.asUnionType().getTypes();
             Type retType = Analyzer.self.builtins.unknown;
@@ -89,23 +87,20 @@ public class Attribute extends Node {
 
 
     private Type getAttrType(@NotNull Type targetType) {
-        List<Binding> bs = targetType.getTable().lookupAttr(attr.id);
-        if (bs == null) {
+        Binding b = targetType.getTable().lookupAttr(attr.id);
+        if (b == null) {
             Analyzer.self.putProblem(attr, "attribute not found in type: " + targetType);
             Type t = Analyzer.self.builtins.unknown;
             t.getTable().setPath(targetType.getTable().extendPath(attr.id));
             return t;
         } else {
-            for (Binding b : bs) {
-                Analyzer.self.putRef(attr, b);
-                if (getParent() != null && getParent().isCall() &&
-                        b.getType().isFuncType() && targetType.isInstanceType())
-                {  // method call
-                    b.getType().asFuncType().setSelfType(targetType);
-                }
+            Analyzer.self.putRef(attr, b);
+            if (getParent() != null && getParent().isCall() &&
+                    b.getType().isFuncType() && targetType.isInstanceType())
+            {  // method call
+                b.getType().asFuncType().setSelfType(targetType);
             }
-
-            return State.makeUnion(bs);
+            return b.getType();
         }
     }
 

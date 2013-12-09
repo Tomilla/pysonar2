@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -114,13 +113,13 @@ public abstract class Node implements java.io.Serializable {
 
 
     @NotNull
-    public static SuperState transformExpr(@NotNull Node n, SuperState s) {
-        return n.transform(s);
+    public static Type resolveExpr(@NotNull Node n, State s) {
+        return n.resolve(s);
     }
 
 
     @NotNull
-    protected abstract SuperState transform(SuperState s);
+    protected abstract Type resolve(State s);
 
 
     public boolean isCall() {
@@ -227,14 +226,14 @@ public abstract class Node implements java.io.Serializable {
      * {@code null}, returns a new {@link org.yinwang.pysonar.types.UnknownType}.
      */
     @NotNull
-    protected Type resolveListAsUnion(@Nullable List<? extends Node> nodes, SuperState s) {
+    protected Type resolveListAsUnion(@Nullable List<? extends Node> nodes, State s) {
         if (nodes == null || nodes.isEmpty()) {
             return Analyzer.self.builtins.unknown;
         }
 
         Type result = Analyzer.self.builtins.unknown;
         for (Node node : nodes) {
-            Type nodeType = transformExpr(node, s);
+            Type nodeType = resolveExpr(node, s);
             result = UnionType.union(result, nodeType);
         }
         return result;
@@ -248,7 +247,7 @@ public abstract class Node implements java.io.Serializable {
     static protected void resolveList(@Nullable List<? extends Node> nodes, State s) {
         if (nodes != null) {
             for (Node n : nodes) {
-                transformExpr(n, s);
+                resolveExpr(n, s);
             }
         }
     }
@@ -261,7 +260,7 @@ public abstract class Node implements java.io.Serializable {
         } else {
             List<Type> typeList = new ArrayList<>();
             for (Node n : nodes) {
-                typeList.add(transformExpr(n, s));
+                typeList.add(resolveExpr(n, s));
             }
             return typeList;
         }

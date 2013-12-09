@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -26,15 +25,15 @@ public class Block extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(@NotNull SuperState state) {
+    public Type resolve(@NotNull State state) {
         // find global names and mark them
         for (Node n : seq) {
             if (n.isGlobal()) {
                 for (Name name : n.asGlobal().getNames()) {
                     state.addGlobalName(name.id);
-                    List<Binding> nb = state.lookup(name.id);
-                    if (nb != null) {
-                        Analyzer.self.putRef(name, nb);
+                    Binding b = state.lookup(name.id);
+                    if (b != null) {
+                        Analyzer.self.putRef(name, b);
                     }
                 }
             }
@@ -44,7 +43,7 @@ public class Block extends Node {
         Type retType = Analyzer.self.builtins.unknown;
 
         for (Node n : seq) {
-            Type t = transformExpr(n, state);
+            Type t = resolveExpr(n, state);
             if (!returned) {
                 retType = UnionType.union(retType, t);
                 if (!UnionType.contains(t, Analyzer.self.builtins.Cont)) {

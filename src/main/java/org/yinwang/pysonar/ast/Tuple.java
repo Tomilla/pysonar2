@@ -1,8 +1,9 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.TupleType;
+import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ public class Tuple extends Sequence {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         TupleType t = new TupleType();
         for (Node e : elts) {
-            t.add(transformExpr(e, s));
+            t.add(resolveExpr(e, s));
         }
         return t;
     }

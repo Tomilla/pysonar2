@@ -25,8 +25,8 @@ public class Binder {
             ((Attribute) target).setAttr(s, rvalue);
         } else if (target instanceof Subscript) {
             Subscript sub = (Subscript) target;
-            Type valueType = Node.transformExpr(sub.value, s);
-            Node.transformExpr(sub.slice, s);
+            Type valueType = Node.resolveExpr(sub.value, s);
+            Node.resolveExpr(sub.slice, s);
             if (valueType instanceof ListType) {
                 ListType t = (ListType) valueType;
                 t.setElementType(UnionType.union(t.getElementType(), rvalue));
@@ -92,27 +92,21 @@ public class Binder {
 
     // iterator
     public static void bindIter(@NotNull State s, Node target, @NotNull Node iter, Binding.Kind kind) {
-        Type iterType = Node.transformExpr(iter, s);
+        Type iterType = Node.resolveExpr(iter, s);
 
         if (iterType.isListType()) {
             bind(s, target, iterType.asListType().getElementType(), kind);
         } else if (iterType.isTupleType()) {
             bind(s, target, iterType.asTupleType().toListType().getElementType(), kind);
         } else {
-            List<Binding> ents = iterType.getTable().lookupAttr("__iter__");
-            if (ents != null) {
-                for (Binding ent : ents) {
-                    if (ent == null || !ent.getType().isFuncType()) {
-                        if (!iterType.isUnknownType()) {
-                            Analyzer.self.putProblem(iter, "not an iterable type: " + iterType);
-                        }
-                        bind(s, target, Analyzer.self.builtins.unknown, kind);
-                    } else {
-                        bind(s, target, ent.getType().asFuncType().getReturnType(), kind);
-                    }
+            Binding ent = iterType.getTable().lookupAttr("__iter__");
+            if (ent == null || !ent.getType().isFuncType()) {
+                if (!iterType.isUnknownType()) {
+                    Analyzer.self.putProblem(iter, "not an iterable type: " + iterType);
                 }
-            } else {
                 bind(s, target, Analyzer.self.builtins.unknown, kind);
+            } else {
+                bind(s, target, ent.getType().asFuncType().getReturnType(), kind);
             }
         }
     }

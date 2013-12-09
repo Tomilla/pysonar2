@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.types.Type;
 
 
 public class Exec extends Node {
@@ -23,15 +24,15 @@ public class Exec extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         if (body != null) {
-            transformExpr(body, s);
+            resolveExpr(body, s);
         }
         if (globals != null) {
-            transformExpr(globals, s);
+            resolveExpr(globals, s);
         }
         if (locals != null) {
-            transformExpr(locals, s);
+            resolveExpr(locals, s);
         }
         return Analyzer.self.builtins.Cont;
     }

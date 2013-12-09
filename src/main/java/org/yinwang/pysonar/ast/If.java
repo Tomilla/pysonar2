@@ -3,7 +3,6 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.SuperState;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -27,25 +26,25 @@ public class If extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(@NotNull SuperState s) {
+    public Type resolve(@NotNull State s) {
         Type type1, type2;
         State s1 = s.copy();
         State s2 = s.copy();
 
-        Type conditionType = transformExpr(test, s);
+        Type conditionType = resolveExpr(test, s);
         if (conditionType.isUndecidedBool()) {
             s1 = conditionType.asBool().getS1();
             s2 = conditionType.asBool().getS2();
         }
 
         if (body != null && !body.isEmpty()) {
-            type1 = transformExpr(body, s1);
+            type1 = resolveExpr(body, s1);
         } else {
             type1 = Analyzer.self.builtins.Cont;
         }
 
         if (orelse != null && !orelse.isEmpty()) {
-            type2 = transformExpr(orelse, s2);
+            type2 = resolveExpr(orelse, s2);
         } else {
             type2 = Analyzer.self.builtins.Cont;
         }

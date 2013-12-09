@@ -49,11 +49,11 @@ public class ClassDef extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(@NotNull SuperState s) {
+    public Type resolve(@NotNull State s) {
         ClassType classType = new ClassType(getName().id, s);
         List<Type> baseTypes = new ArrayList<>();
         for (Node base : bases) {
-            Type baseType = transformExpr(base, s);
+            Type baseType = resolveExpr(base, s);
             if (baseType.isClassType()) {
                 classType.addSuper(baseType);
             } else if (baseType.isUnionType()) {
@@ -79,7 +79,7 @@ public class ClassDef extends Node {
         // Bind ClassType to name here before resolving the body because the
         // methods need this type as self.
         Binder.bind(s, name, classType, Binding.Kind.CLASS);
-        transformExpr(body, classType.getTable());
+        resolveExpr(body, classType.getTable());
         return Analyzer.self.builtins.Cont;
     }
 

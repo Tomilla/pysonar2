@@ -1,8 +1,9 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.ListType;
+import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -26,13 +27,12 @@ public class ListComp extends Node {
      * Python's list comprehension will bind the variables used in generators.
      * This will erase the original values of the variables even after the
      * comprehension.
-     * @param s
      */
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         resolveList(generators, s);
-        return new ListType(transformExpr(elt, s));
+        return new ListType(resolveExpr(elt, s));
     }
 
 

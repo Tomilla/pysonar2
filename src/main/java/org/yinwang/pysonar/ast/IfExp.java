@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -25,17 +25,17 @@ public class IfExp extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         Type type1, type2;
-        transformExpr(test, s);
+        resolveExpr(test, s);
 
         if (body != null) {
-            type1 = transformExpr(body, s);
+            type1 = resolveExpr(body, s);
         } else {
             type1 = Analyzer.self.builtins.Cont;
         }
         if (orelse != null) {
-            type2 = transformExpr(orelse, s);
+            type2 = resolveExpr(orelse, s);
         } else {
             type2 = Analyzer.self.builtins.Cont;
         }

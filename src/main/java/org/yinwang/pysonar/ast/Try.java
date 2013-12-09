@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -31,26 +31,26 @@ public class Try extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         Type tp1 = Analyzer.self.builtins.unknown;
         Type tp2 = Analyzer.self.builtins.unknown;
         Type tph = Analyzer.self.builtins.unknown;
         Type tpFinal = Analyzer.self.builtins.unknown;
 
         for (ExceptHandler h : handlers) {
-            tph = UnionType.union(tph, transformExpr(h, s));
+            tph = UnionType.union(tph, resolveExpr(h, s));
         }
 
         if (body != null) {
-            tp1 = transformExpr(body, s);
+            tp1 = resolveExpr(body, s);
         }
 
         if (orelse != null) {
-            tp2 = transformExpr(orelse, s);
+            tp2 = resolveExpr(orelse, s);
         }
 
         if (finalbody != null) {
-            tpFinal = transformExpr(finalbody, s);
+            tpFinal = resolveExpr(finalbody, s);
         }
 
 

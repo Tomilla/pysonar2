@@ -1,8 +1,9 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.ListType;
+import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class Set extends Sequence {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         if (elts.size() == 0) {
             return new ListType();
         }
@@ -24,9 +25,9 @@ public class Set extends Sequence {
         ListType listType = null;
         for (Node elt : elts) {
             if (listType == null) {
-                listType = new ListType(transformExpr(elt, s));
+                listType = new ListType(resolveExpr(elt, s));
             } else {
-                listType.add(transformExpr(elt, s));
+                listType.add(resolveExpr(elt, s));
             }
         }
 

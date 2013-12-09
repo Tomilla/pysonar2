@@ -1,8 +1,9 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.SuperState;
+import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.ListType;
+import org.yinwang.pysonar.types.Type;
 
 
 public class Slice extends Node {
@@ -23,15 +24,15 @@ public class Slice extends Node {
 
     @NotNull
     @Override
-    public SuperState transform(SuperState s) {
+    public Type resolve(State s) {
         if (lower != null) {
-            transformExpr(lower, s);
+            resolveExpr(lower, s);
         }
         if (step != null) {
-            transformExpr(step, s);
+            resolveExpr(step, s);
         }
         if (upper != null) {
-            transformExpr(upper, s);
+            resolveExpr(upper, s);
         }
         return new ListType();
     }
