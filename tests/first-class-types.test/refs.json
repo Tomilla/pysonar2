@@ -1,0 +1,376 @@
+[
+  {
+    "ref": {
+      "name": "pass_type",
+      "file": "test1.py",
+      "start": 96,
+      "end": 105
+    },
+    "dests": [
+      {
+        "name": "pass_type",
+        "file": "test1.py",
+        "start": 62,
+        "end": 71
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "A",
+      "file": "test1.py",
+      "start": 106,
+      "end": 107
+    },
+    "dests": [
+      {
+        "name": "A",
+        "file": "test1.py",
+        "start": 42,
+        "end": 43
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "t",
+      "file": "test1.py",
+      "start": 85,
+      "end": 86
+    },
+    "dests": [
+      {
+        "name": "t",
+        "file": "test1.py",
+        "start": 72,
+        "end": 73
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "type1",
+      "file": "test1.py",
+      "start": 115,
+      "end": 120
+    },
+    "dests": [
+      {
+        "name": "type1",
+        "file": "test1.py",
+        "start": 88,
+        "end": 93
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "test1.py",
+      "start": 130,
+      "end": 132
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "test1.py",
+        "start": 109,
+        "end": 111
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "w",
+      "file": "test1.py",
+      "start": 133,
+      "end": 134
+    },
+    "dests": [
+      {
+        "name": "w",
+        "file": "test1.py",
+        "start": 47,
+        "end": 48
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "B",
+      "file": "test2.py",
+      "start": 151,
+      "end": 152
+    },
+    "dests": [
+      {
+        "name": "B",
+        "file": "test2.py",
+        "start": 76,
+        "end": 77
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "A",
+      "file": "test2.py",
+      "start": 164,
+      "end": 165
+    },
+    "dests": [
+      {
+        "name": "A",
+        "file": "test2.py",
+        "start": 53,
+        "end": 54
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "test2.py",
+      "start": 155,
+      "end": 157
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "test2.py",
+        "start": 146,
+        "end": 148
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "get_type",
+      "file": "test2.py",
+      "start": 175,
+      "end": 183
+    },
+    "dests": [
+      {
+        "name": "get_type",
+        "file": "test2.py",
+        "start": 116,
+        "end": 124
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "test2.py",
+      "start": 184,
+      "end": 186
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "test2.py",
+        "start": 146,
+        "end": 148
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test2.py",
+      "start": 138,
+      "end": 139
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test2.py",
+        "start": 125,
+        "end": 126
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "typ",
+      "file": "test2.py",
+      "start": 140,
+      "end": 143
+    },
+    "dests": [
+      {
+        "name": "typ",
+        "file": "test2.py",
+        "start": 158,
+        "end": 161
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "type1",
+      "file": "test2.py",
+      "start": 194,
+      "end": 199
+    },
+    "dests": [
+      {
+        "name": "type1",
+        "file": "test2.py",
+        "start": 167,
+        "end": 172
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o2",
+      "file": "test2.py",
+      "start": 209,
+      "end": 211
+    },
+    "dests": [
+      {
+        "name": "o2",
+        "file": "test2.py",
+        "start": 188,
+        "end": 190
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "w",
+      "file": "test2.py",
+      "start": 212,
+      "end": 213
+    },
+    "dests": [
+      {
+        "name": "w",
+        "file": "test2.py",
+        "start": 58,
+        "end": 59
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "choose_type",
+      "file": "test3.py",
+      "start": 233,
+      "end": 244
+    },
+    "dests": [
+      {
+        "name": "choose_type",
+        "file": "test3.py",
+        "start": 158,
+        "end": 169
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test3.py",
+      "start": 180,
+      "end": 181
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test3.py",
+        "start": 170,
+        "end": 171
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "A",
+      "file": "test3.py",
+      "start": 201,
+      "end": 202
+    },
+    "dests": [
+      {
+        "name": "A",
+        "file": "test3.py",
+        "start": 58,
+        "end": 59
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "B",
+      "file": "test3.py",
+      "start": 222,
+      "end": 223
+    },
+    "dests": [
+      {
+        "name": "B",
+        "file": "test3.py",
+        "start": 80,
+        "end": 81
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "type1",
+      "file": "test3.py",
+      "start": 261,
+      "end": 266
+    },
+    "dests": [
+      {
+        "name": "type1",
+        "file": "test3.py",
+        "start": 225,
+        "end": 230
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "test3.py",
+      "start": 276,
+      "end": 278
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "test3.py",
+        "start": 255,
+        "end": 257
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "w",
+      "file": "test3.py",
+      "start": 279,
+      "end": 280
+    },
+    "dests": [
+      {
+        "name": "w",
+        "file": "test3.py",
+        "start": 85,
+        "end": 86
+      },
+      {
+        "name": "w",
+        "file": "test3.py",
+        "start": 63,
+        "end": 64
+      }
+    ]
+  }
+]

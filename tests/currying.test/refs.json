@@ -1,0 +1,98 @@
+[
+  {
+    "ref": {
+      "name": "curr",
+      "file": "curry1.py",
+      "start": 324,
+      "end": 328
+    },
+    "dests": [
+      {
+        "name": "curr",
+        "file": "curry1.py",
+        "start": 267,
+        "end": 271
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "curr1",
+      "file": "curry1.py",
+      "start": 340,
+      "end": 345
+    },
+    "dests": [
+      {
+        "name": "curr1",
+        "file": "curry1.py",
+        "start": 316,
+        "end": 321
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "curr2",
+      "file": "curry1.py",
+      "start": 357,
+      "end": 362
+    },
+    "dests": [
+      {
+        "name": "curr2",
+        "file": "curry1.py",
+        "start": 332,
+        "end": 337
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "curry1.py",
+      "start": 305,
+      "end": 306
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "curry1.py",
+        "start": 272,
+        "end": 273
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "curry1.py",
+      "start": 309,
+      "end": 310
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "curry1.py",
+        "start": 292,
+        "end": 293
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "z",
+      "file": "curry1.py",
+      "start": 313,
+      "end": 314
+    },
+    "dests": [
+      {
+        "name": "z",
+        "file": "curry1.py",
+        "start": 302,
+        "end": 303
+      }
+    ]
+  }
+]

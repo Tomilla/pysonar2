@@ -1,0 +1,308 @@
+[
+  {
+    "ref": {
+      "name": "A1",
+      "file": "interprocedural1.py",
+      "start": 68,
+      "end": 70
+    },
+    "dests": [
+      {
+        "name": "A1",
+        "file": "interprocedural1.py",
+        "start": 39,
+        "end": 41
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "B1",
+      "file": "interprocedural1.py",
+      "start": 90,
+      "end": 92
+    },
+    "dests": [
+      {
+        "name": "B1",
+        "file": "interprocedural1.py",
+        "start": 58,
+        "end": 60
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "C1",
+      "file": "interprocedural1.py",
+      "start": 101,
+      "end": 103
+    },
+    "dests": [
+      {
+        "name": "C1",
+        "file": "interprocedural1.py",
+        "start": 80,
+        "end": 82
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "f1",
+      "file": "interprocedural1.py",
+      "start": 207,
+      "end": 209
+    },
+    "dests": [
+      {
+        "name": "f1",
+        "file": "interprocedural1.py",
+        "start": 111,
+        "end": 113
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "interprocedural1.py",
+      "start": 210,
+      "end": 212
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "interprocedural1.py",
+        "start": 96,
+        "end": 98
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "interprocedural1.py",
+      "start": 127,
+      "end": 128
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "interprocedural1.py",
+        "start": 114,
+        "end": 115
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "z",
+      "file": "interprocedural1.py",
+      "start": 129,
+      "end": 130
+    },
+    "dests": [
+      {
+        "name": "z",
+        "file": "interprocedural1.py",
+        "start": 86,
+        "end": 87
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "g1",
+      "file": "interprocedural1.py",
+      "start": 387,
+      "end": 389
+    },
+    "dests": [
+      {
+        "name": "g1",
+        "file": "interprocedural1.py",
+        "start": 295,
+        "end": 297
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "g1",
+      "file": "interprocedural1.py",
+      "start": 390,
+      "end": 392
+    },
+    "dests": [
+      {
+        "name": "g1",
+        "file": "interprocedural1.py",
+        "start": 295,
+        "end": 297
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "interprocedural1.py",
+      "start": 393,
+      "end": 395
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "interprocedural1.py",
+        "start": 96,
+        "end": 98
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "interprocedural1.py",
+      "start": 311,
+      "end": 312
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "interprocedural1.py",
+        "start": 298,
+        "end": 299
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "z",
+      "file": "interprocedural1.py",
+      "start": 313,
+      "end": 314
+    },
+    "dests": [
+      {
+        "name": "z",
+        "file": "interprocedural1.py",
+        "start": 86,
+        "end": 87
+      },
+      {
+        "name": "z",
+        "file": "interprocedural1.py",
+        "start": 64,
+        "end": 65
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "h1",
+      "file": "interprocedural1.py",
+      "start": 580,
+      "end": 582
+    },
+    "dests": [
+      {
+        "name": "h1",
+        "file": "interprocedural1.py",
+        "start": 487,
+        "end": 489
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "h1",
+      "file": "interprocedural1.py",
+      "start": 583,
+      "end": 585
+    },
+    "dests": [
+      {
+        "name": "h1",
+        "file": "interprocedural1.py",
+        "start": 487,
+        "end": 489
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "h1",
+      "file": "interprocedural1.py",
+      "start": 586,
+      "end": 588
+    },
+    "dests": [
+      {
+        "name": "h1",
+        "file": "interprocedural1.py",
+        "start": 487,
+        "end": 489
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "o1",
+      "file": "interprocedural1.py",
+      "start": 589,
+      "end": 591
+    },
+    "dests": [
+      {
+        "name": "o1",
+        "file": "interprocedural1.py",
+        "start": 96,
+        "end": 98
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "interprocedural1.py",
+      "start": 503,
+      "end": 504
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "interprocedural1.py",
+        "start": 490,
+        "end": 491
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "z",
+      "file": "interprocedural1.py",
+      "start": 505,
+      "end": 506
+    },
+    "dests": [
+      {
+        "name": "z",
+        "file": "interprocedural1.py",
+        "start": 86,
+        "end": 87
+      },
+      {
+        "name": "z",
+        "file": "interprocedural1.py",
+        "start": 64,
+        "end": 65
+      },
+      {
+        "name": "z",
+        "file": "interprocedural1.py",
+        "start": 45,
+        "end": 46
+      }
+    ]
+  }
+]
