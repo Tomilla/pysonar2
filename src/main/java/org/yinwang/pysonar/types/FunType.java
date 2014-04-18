@@ -45,15 +45,15 @@ public class FunType extends Type {
             from = simplifySelf((TupleType) from);
         }
 
-        if (arrows.size() < 5) {
-            arrows.put(from, to);
-            Map<Type, Type> oldArrows = arrows;
-            arrows = compressArrows(arrows);
+//        if (arrows.size() < 5) {
+        arrows.put(from, to);
+//            Map<Type, Type> oldArrows = arrows;
+//            arrows = compressArrows(arrows);
 
-            if (toString().length() > 900) {
-                arrows = oldArrows;
-            }
-        }
+//            if (toString().length() > 900) {
+//                arrows = oldArrows;
+//            }
+//        }
     }
 
 
@@ -192,6 +192,7 @@ public class FunType extends Type {
             return "? -> ?";
         }
 
+        Map<Type, Type> compressed = compressArrows(arrows);
         StringBuilder sb = new StringBuilder();
 
         Integer num = ctr.visit(this);
@@ -203,7 +204,7 @@ public class FunType extends Type {
             int i = 0;
             Set<String> seen = new HashSet<>();
 
-            for (Map.Entry<Type, Type> e : arrows.entrySet()) {
+            for (Map.Entry<Type, Type> e : compressed.entrySet()) {
                 Type from = e.getKey();
                 String as = from.printType(ctr) + " -> " + e.getValue().printType(ctr);
 

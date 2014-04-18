@@ -143,12 +143,12 @@ public class Parser {
         }
 
         if (type.equals("Attribute")) {
-            Node value = convert(map.get("value"));
+            Node target = convert(map.get("value"));
             Name attr = (Name) convert(map.get("attr_name"));
             if (attr == null) {
                 attr = new Name((String) map.get("attr"));
             }
-            return new Attribute(value, attr, file, start, end);
+            return new Attribute(target, attr, file, start, end);
         }
 
         if (type.equals("AugAssign")) {

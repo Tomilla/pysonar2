@@ -109,13 +109,11 @@ public class Call extends Node {
         if (func.func == null) {
             // func without definition (possibly builtins)
             return func.getReturnType();
-        } else if (call != null && Analyzer.self.inStack(call)) {
-            func.setSelfType(null);
-            return Type.UNKNOWN;
         }
 
-        if (call != null) {
-            Analyzer.self.pushStack(call);
+        if (call != null && Analyzer.self.inStack(call)) {
+            func.setSelfType(null);
+            return Type.UNKNOWN;
         }
 
         List<Type> pTypes = new ArrayList<>();
@@ -152,7 +150,16 @@ public class Call extends Node {
             func.setSelfType(null);
             return cachedTo;
         } else {
+            if (call != null) {
+                Analyzer.self.pushStack(call);
+            }
+
             Type toType = transformExpr(func.func.body, funcTable);
+
+            if (call != null) {
+                Analyzer.self.popStack(call);
+            }
+
             if (missingReturn(toType)) {
                 Analyzer.self.putProblem(func.func.name, "Function not always return a value");
 
